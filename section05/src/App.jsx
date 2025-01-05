@@ -3,7 +3,9 @@ import Header from './components/Header.jsx';
 import Main from './components/Main.jsx';
 import Footer from './components/Footer.jsx';
 import Button from './components/Button.jsx';
-import { useState } from "react";
+import Bulb from './components/Bulb.jsx';
+import Counter from './components/Counter.jsx';
+import Register from './components/Register.jsx';
 
 function App() {
   // const buttonProps = {
@@ -28,25 +30,21 @@ function App() {
   //   </>
   // );
 
-  const [ count, setCount ] = useState(0);
-  const [ light, setLight ] = useState("OFF");
+
+
+  // return (
+  //   <>
+  //     <Bulb/>
+  //     <Counter />
+  //   </>
+  // );
+
 
   return (
     <>
-      <div>
-        <h1>{light}</h1>
-        <button onClick={() => {
-          setLight(light === "ON" ? "OFF" : "ON");
-        }}>전구 {light === "ON" ? "끄기" : "켜기"}</button>
-      </div>
-      <div>
-        <h1>{count}</h1>
-        <button onClick={() => {
-          setCount(count + 1);
-        }}>+</button>
-      </div>
+      <Register />
     </>
-  );
+  ); 
 }
 
 export default App;
