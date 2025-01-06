@@ -6,6 +6,7 @@ import Button from './components/Button.jsx';
 import Bulb from './components/Bulb.jsx';
 import Counter from './components/Counter.jsx';
 import Register from './components/Register.jsx';
+import HookExam from './components/HookExam.jsx';
 
 function App() {
   // const buttonProps = {
@@ -40,11 +41,17 @@ function App() {
   // );
 
 
+  // return (
+  //   <>
+  //     <Register />
+  //   </>
+  // ); 
+
   return (
     <>
-      <Register />
+      <HookExam />
     </>
-  ); 
+  )
 }
 
 export default App;
