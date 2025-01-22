@@ -1,46 +1,28 @@
 import "./Editor.css";
 import EmotionItem from "./EmotionItem";
 import Button from "./Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { emotionList } from "../util/constants";
+import { getStringedDate } from "../util/get-stringed-date";
 
-const emotionList = [
-    {
-        emotionId: 1,
-        emotionName: "완전 좋음"
-    },
-    {
-        emotionId: 2,
-        emotionName: "좋음"
-    },
-    {
-        emotionId: 3,
-        emotionName: "그럭저럭"
-    },
-    {
-        emotionId: 4,
-        emotionName: "나쁨"
-    },
-    {
-        emotionId: 5,
-        emotionName: "끔찍함"
-    },
-];
-
-const getStringedDate = (targetDate) => {
-    // 날짜 -> YYYY-MM-DD
-    let year = targetDate.getFullYear();
-    let month = String(targetDate.getMonth() + 1).padStart(2, '0');
-    let day = String(targetDate.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
-
-const Editor = () => {
+const Editor = ({ initData, onSubmit }) => {
     const [input, setInput] = useState({
         createdDate: new Date(),
         emotionId: 3,
         content: "",
     });
+
+    const nav = useNavigate();
+
+    useEffect(() => {
+        if (initData) {
+            setInput({
+                ...initData,
+                createdDate: new Date(Number(initData.createdDate))
+            });
+        }
+    }, [initData]);
 
     const onChangeInput = (e) => {
         console.log(e.target.name);
@@ -59,6 +41,10 @@ const Editor = () => {
         });
     }
 
+    const onClickSubmitButton = () => {
+        onSubmit(input);
+    };
+
     return (
         <div className="Editor">
             <section className="date_section">
@@ -76,8 +62,8 @@ const Editor = () => {
                     {emotionList.map((item) => (
                         <EmotionItem
                             onClick={() => onChangeInput({
-                                target : {
-                                    name:"emotionId",
+                                target: {
+                                    name: "emotionId",
                                     value: item.emotionId,
                                 },
                             })}
@@ -90,11 +76,16 @@ const Editor = () => {
             </section>
             <section className="content_section">
                 <h4>오늘의 일기</h4>
-                <textarea placeholder="오늘은 어땠나요?"></textarea>
+                <textarea
+                    name="content"
+                    value={input.content}
+                    onChange={onChangeInput}
+                    placeholder="오늘은 어땠나요?"
+                ></textarea>
             </section>
             <section className="button_section">
-                <Button text={"취소하기"} />
-                <Button text={"작성완료"} type={"POSITIVE"} />
+                <Button onClick={() => nav(-1)} text={"취소하기"} />
+                <Button onClick={onClickSubmitButton} text={"작성완료"} type={"POSITIVE"} />
             </section>
         </div>
     );
